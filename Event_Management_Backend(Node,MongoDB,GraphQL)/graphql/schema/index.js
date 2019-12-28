@@ -17,6 +17,14 @@ type User{
     createdEvents: [Event!]
 }
 
+type Booking{
+    _id: ID!
+    event: Event!
+    user: User!
+    createdAt: String!
+    updatedAt: String!
+}
+
 input EventInput {
     title: String!
     description: String!
@@ -30,13 +38,21 @@ input UserInput{
     password: String!
 }
 
+input BookingInput{
+    userId: String!
+    eventId: String!
+}
+
 type Queries{
     getEvents: [Event!]!
+    getBookings: [Booking!]!
 }
 
 type Mutations{
     createEvent(eventInput: EventInput): Event
     createUser(userInput: UserInput): User
+    newBooking(bookingInput: BookingInput): Booking
+    cancelBooking(bookingInput: BookingInput): Event
 }
 
 schema {
