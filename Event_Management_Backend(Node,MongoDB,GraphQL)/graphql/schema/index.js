@@ -25,12 +25,18 @@ type Booking{
     updatedAt: String!
 }
 
+type AuthData{
+    userId: ID!
+    token: String!
+    tokenExpiry: Int!
+}
+
 input EventInput {
     title: String!
     description: String!
     price: Float!
     date: String!
-    creator: String!
+    creator: String
 }
 
 input UserInput{
@@ -43,16 +49,21 @@ input BookingInput{
     eventId: String!
 }
 
+input CancelBookingInput{
+    bookingId: String!
+}
+
 type Queries{
     getEvents: [Event!]!
     getBookings: [Booking!]!
+    login(email: String!, password: String!): AuthData!
 }
 
 type Mutations{
     createEvent(eventInput: EventInput): Event
     createUser(userInput: UserInput): User
-    newBooking(bookingInput: BookingInput): Booking
-    cancelBooking(bookingInput: BookingInput): Event
+    newBooking(eventId: ID!): Booking
+    cancelBooking(bookingId: ID!): Event
 }
 
 schema {
