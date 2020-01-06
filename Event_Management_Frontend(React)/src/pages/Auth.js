@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import {Link} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Context } from '../context/Context';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -30,6 +31,7 @@ const Auth = () => {
     const [password,setPassword] = useState("");
     const [login,setLogin] = useState(true);
     const classes = useStyles();
+    const context = useContext(Context);
     let body;
     if(login){
         body={
@@ -58,22 +60,23 @@ const Auth = () => {
     }
 
     const submit = async () => {
-        try{
-            const response = await fetch('http://localhost:3300/graphql', {
-                method: 'POST',
-                body: JSON.stringify(body),
-                headers:{
-                    'Content-Type': 'application/json'
-                }
-            });
-            const resData = await response.json();
-            console.log(resData);
-            //console.log(resData.errors[0].message)
-        }
-        catch(err){
-            console.log(err);
+        // try{
+        //     const response = await fetch('http://localhost:3300/graphql', {
+        //         method: 'POST',
+        //         body: JSON.stringify(body),
+        //         headers:{
+        //             'Content-Type': 'application/json'
+        //         }
+        //     });
+        //     const resData = await response.json();
+        //     console.log(resData);
+        //     //console.log(resData.errors[0].message)
+        // }
+        // catch(err){
+        //     console.log(err);
             
-        }
+        // }
+        context.login(body);
     }
 
     return(
@@ -128,6 +131,7 @@ const Auth = () => {
         {login ? <span>Don't have an account?...<Link onClick={()=>{setLogin(false)}}>SIGN UP</Link></span> : 
           <span>Have an account?...<Link onClick={()=>{setLogin(true)}}>LOGIN</Link></span>  }
       </div>
+      <p>{context.token}</p>
     </Container>
     )
 }
