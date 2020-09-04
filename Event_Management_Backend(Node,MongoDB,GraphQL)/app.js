@@ -12,10 +12,7 @@ mongoose.connect("mongodb://localhost:27017/eventsDB",{
   useUnifiedTopology: true,
   useNewUrlParser: true
 });
-// mongoose.connect("mongodb+srv://admin-rishi:m0ng00se@cluster0-rtpri.mongodb.net/events",{
-//   useUnifiedTopology: true,
-//   useNewUrlParser: true
-// });
+
 mongoose.Promise = global.Promise;
 
 app.use((req,res,next)=>{
